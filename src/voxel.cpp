@@ -32,13 +32,13 @@ std::vector<uint32_t> *voxel_grid_subsample_3d(
 
     /* Find the bounding coordinates */
     float32 x_min = data[0];
-    float32 x_range = x_min;
+    float32 x_max = x_min;
 
     float32 y_min = data[1];
-    float32 y_range = y_min;
+    float32 y_max = y_min;
 
     float32 z_min = data[2];
-    float32 z_range = z_min;
+    float32 z_max = z_min;
 
     for (uint32_t i = 0; i < nrows; ++i) {
         const auto offset = i * 3;
@@ -50,9 +50,9 @@ std::vector<uint32_t> *voxel_grid_subsample_3d(
         y_min = std::min(y_min, y);
         z_min = std::min(z_min, z);
 
-        x_range = std::max(x_range, x);
-        y_range = std::max(y_range, y);
-        z_range = std::max(z_range, z);
+        x_max = std::max(x_max, x);
+        y_max = std::max(y_max, y);
+        z_max = std::max(z_max, z);
     }
 
     /* Make a grid - maps a voxel index to a point index*/
@@ -60,9 +60,9 @@ std::vector<uint32_t> *voxel_grid_subsample_3d(
     grid.reserve(nrows);
 
     /* Number of cells for each dimension */
-    const uint64_t nx = std::ceil((x_range - x_min) / voxel_size);
-    const uint64_t ny = std::ceil((y_range - y_min) / voxel_size);
-    const uint64_t nz = std::ceil((z_range - z_min) / voxel_size);
+    const uint64_t nx = std::ceil((x_max - x_min) / voxel_size);
+    const uint64_t ny = std::ceil((y_max - y_min) / voxel_size);
+    const uint64_t nz = std::ceil((z_max - z_min) / voxel_size);
 
     /* Subsample */
     for (uint32_t i = 0; i < nrows; ++i) {
