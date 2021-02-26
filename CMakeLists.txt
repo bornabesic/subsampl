@@ -14,5 +14,7 @@ endif(NOT CMAKE_BUILD_TYPE)
 
 message("Build type: ${CMAKE_BUILD_TYPE}")
 
+add_subdirectory(lib/)
+
 include_directories(include/)
 add_subdirectory(src/)
