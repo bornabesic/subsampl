@@ -7,16 +7,20 @@ from pybind11.setup_helpers import Pybind11Extension
 
 this_dir = Path(__file__).parent
 
-ext_modules = [
-    Pybind11Extension(
-        "pysubsampl",
-        sorted(map(str,
-            filter(lambda p: not p.name.startswith("test"),
-            this_dir.glob("src/*.cpp")
-        ))),
-        include_dirs=[str(this_dir / "include")]
-    )
-]
+flags = ["-Os"]
+extension = Pybind11Extension(
+    "pysubsampl",
+    sorted(map(str,
+        filter(lambda p: not p.name.startswith("test"),
+        this_dir.glob("src/*.cpp")
+    ))),
+    include_dirs=[str(this_dir / "include")],
+    extra_compile_args=flags
+)
+for flag in flags:
+    assert flag in extension.extra_compile_args
+
+ext_modules = [extension]
 
 setup(
     name="pysubsampl",
