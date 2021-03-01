@@ -27,7 +27,7 @@
 #include "types.hpp"
 #include "hashmap.hpp"
 
-void _voxel_grid_subsample_3d_chunk(
+static void _chunk_compute_voxel_index_3d(
     const float32 *data,
     std::vector<uint64_t>& point_to_voxel,
     const uint32_t start, const uint32_t end,
@@ -96,7 +96,7 @@ std::vector<uint32_t> *voxel_grid_subsample_3d(
         const uint32_t end = std::min(start + chunk_size, nrows);
         point_to_voxels[t].resize(end - start);
         threads.emplace_back(
-            _voxel_grid_subsample_3d_chunk,
+            _chunk_compute_voxel_index_3d,
             data,
             std::ref(point_to_voxels[t]),
             start, end,
