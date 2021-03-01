@@ -10,7 +10,10 @@ this_dir = Path(__file__).parent
 ext_modules = [
     Pybind11Extension(
         "pysubsampl",
-        sorted(map(str, this_dir.glob("src/*.cpp"))),
+        sorted(map(str,
+            filter(lambda p: not p.name.startswith("test"),
+            this_dir.glob("src/*.cpp")
+        ))),
         include_dirs=[str(this_dir / "include")]
     )
 ]
