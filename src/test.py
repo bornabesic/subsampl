@@ -1,4 +1,6 @@
 
+import time
+
 import numpy as np
 import pysubsampl
 
@@ -12,5 +14,10 @@ voxel_size = 0.025
 data = np.random.uniform((0, 0, 0), (x_range, y_range, z_range), size=(n, 3)).astype(np.float32)
 print("Points:", data.shape[0])
 
+t_start = time.time()
 indices = pysubsampl.voxel_grid_subsample_3d(data, voxel_size)
-print("Points (subsampled):", indices.shape[0])
+print("Subsampling took", f"{time.time() - t_start:.2f}", "s")
+t_start = time.time()
+data = data[indices, :]
+print("Indexing took", f"{time.time() - t_start:.2f}", "s")
+print("Points (subsampled):", data.shape[0])

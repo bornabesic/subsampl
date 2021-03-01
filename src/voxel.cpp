@@ -18,14 +18,39 @@
  */
 
 
-#include <array>
 #include <cmath>
 #include <cstdint>
-#include <unordered_map>
+#include <thread>
 #include <vector>
 
 #include "subsampl.hpp"
 #include "types.hpp"
+#include "hashmap.hpp"
+
+void _voxel_grid_subsample_3d_chunk(
+    const float32 *data,
+    std::vector<uint64_t>& point_to_voxel,
+    const uint32_t start, const uint32_t end,
+    const float32 voxel_size,
+    const float32 x_min, const float32 y_min, const float32 z_min,
+    const uint64_t ny, const uint64_t nz
+    ) {
+
+    for (uint32_t i = start; i < end; ++i) {
+        const auto offset = i * 3;
+        const auto& x = data[offset];
+        const auto& y = data[offset + 1];
+        const auto& z = data[offset + 2];
+
+        const uint64_t vi = (x - x_min) / voxel_size;
+        const uint64_t vj = (y - y_min) / voxel_size;
+        const uint64_t vk = (z - z_min) / voxel_size;
+
+        const uint64_t v = vi * ny * nz + vj * nz + vk;
+
+        point_to_voxel[i - start] = v;
+    }
+}
 
 std::vector<uint32_t> *voxel_grid_subsample_3d(
     const float32 *data, const uint32_t nrows, const float32 voxel_size){
@@ -55,38 +80,45 @@ std::vector<uint32_t> *voxel_grid_subsample_3d(
         z_max = std::max(z_max, z);
     }
 
-    /* Make a grid - maps a voxel index to a point index*/
-    std::unordered_map<uint64_t, uint32_t> grid;
-    grid.reserve(nrows);
-
     /* Number of cells for each dimension */
     const uint64_t nx = std::ceil((x_max - x_min) / voxel_size);
     const uint64_t ny = std::ceil((y_max - y_min) / voxel_size);
     const uint64_t nz = std::ceil((z_max - z_min) / voxel_size);
 
-    /* Subsample */
-    for (uint32_t i = 0; i < nrows; ++i) {
-        const auto offset = i * 3;
-        const auto& x = data[offset];
-        const auto& y = data[offset + 1];
-        const auto& z = data[offset + 2];
+    /* Compute voxel index for each point */
+    const auto nthreads = std::thread::hardware_concurrency();
+    const uint32_t chunk_size = std::ceil((float32) nrows / nthreads);
 
-        const uint64_t vi = (x - x_min) / voxel_size;
-        const uint64_t vj = (y - y_min) / voxel_size;
-        const uint64_t vk = (z - z_min) / voxel_size;
-
-        const uint64_t v = vi * ny * nz + vj * nz + vk;
-
-        grid[v] = i;
+    std::vector<std::vector<uint64_t>> point_to_voxels(nthreads);
+    std::vector<std::thread> threads;
+    for (unsigned int t = 0; t < nthreads; ++t) {
+        const uint32_t start = t * chunk_size;
+        const uint32_t end = std::min(start + chunk_size, nrows);
+        point_to_voxels[t].resize(end - start);
+        threads.emplace_back(
+            _voxel_grid_subsample_3d_chunk,
+            data,
+            std::ref(point_to_voxels[t]),
+            start, end,
+            voxel_size,
+            x_min, y_min, z_min,
+            ny, nz
+        );
     }
 
-    /* Return indices of subsampled points */
-    auto *indices = new std::vector<uint32_t>();
+    for (auto& thread : threads) thread.join();
 
-    for (auto it = grid.cbegin(); it != grid.cend();) {
-        indices->push_back(it->second);
-        it = grid.erase(it);
+    /* Select a single point per voxel by using a hashmap */
+    grouping_hashmap<uint64_t, uint32_t> map(nrows);
+    for (unsigned int t = 0; t < nthreads; ++t) {
+        const auto &point_to_voxel = point_to_voxels[t];
+        const uint32_t start = t * chunk_size;
+        for (uint32_t i = 0; i < point_to_voxel.size(); ++i) {
+            const auto &v = point_to_voxel[i];
+            map.insert(v, i + start);
+        }
     }
+    map.squeeze();
 
-    return indices;
+    return map.move_values();
 }
