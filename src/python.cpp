@@ -52,5 +52,5 @@ PYBIND11_MODULE(pysubsampl, m) {
         auto *indices = voxel_grid_subsample_3d(data, nrows, voxel_size);
 
         return vector_pointer_to_numpy_array<uint32_t>(indices);
-    });
+    }, py::arg("array"), py::arg("voxel_size"));
 }
