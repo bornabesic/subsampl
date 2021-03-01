@@ -84,7 +84,7 @@ class grouping_hashmap {
 
         inline void insert(const K &key, const V &value) {
             const auto hash = this->hash(key);
-            auto index = key % this->size;
+            auto index = hash % this->size;
 
             auto &metas_ref = *this->metas;
             auto &values_ref = *this->values;
