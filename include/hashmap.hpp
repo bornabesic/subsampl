@@ -20,6 +20,7 @@
 #pragma once
 
 #include <cstdint>
+#include <cassert>
 #include <algorithm>
 #include <functional>
 #include <vector>
@@ -54,6 +55,8 @@ class grouping_hashmap {
         }
 
         inline void squeeze() {
+            if (this->size < 2) return;
+
             auto &metas_ref = *this->metas;
             auto &values_ref = *this->values;
 
@@ -61,14 +64,14 @@ class grouping_hashmap {
             uint64_t index_end = this->size - 1;
             while (true) {
                 auto &meta_unoccupied = metas_ref[index_unoccupied];
-                while (meta_unoccupied.occupied)
+                while (index_unoccupied != this->size - 1 && meta_unoccupied.occupied)
                     meta_unoccupied = metas_ref[++index_unoccupied];
 
                 auto &meta_end = metas_ref[index_end];
-                while (!meta_end.occupied)
+                while (index_end != 0 && !meta_end.occupied)
                     meta_end = metas_ref[--index_end];
 
-                if (index_unoccupied > index_end) break;
+                if (index_unoccupied >= index_end) break;
                 else {
                     meta_unoccupied.key = meta_end.key;
                     meta_unoccupied.occupied = true;
@@ -78,7 +81,11 @@ class grouping_hashmap {
                 }
             }
 
-            this->size = index_unoccupied;
+            if (index_unoccupied > index_end) this->size = index_unoccupied;
+            else if (index_unoccupied == 0) this->size = 0; // Empty
+            else if (index_unoccupied == this->size - 1) {} // Full
+            else assert(false); // Cannot happen
+
             metas_ref.resize(this->size);
             values_ref.resize(this->size);
         }

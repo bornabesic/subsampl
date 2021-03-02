@@ -55,6 +55,8 @@ static void _chunk_compute_voxel_index_3d(
 std::vector<uint32_t> *voxel_grid_subsample_3d(
     const float32 *data, const uint32_t nrows, const float32 voxel_size){
 
+    if (nrows == 0) return new std::vector<uint32_t>();
+
     /* Find the bounding coordinates */
     float32 x_min = data[0];
     float32 x_max = x_min;
@@ -86,8 +88,9 @@ std::vector<uint32_t> *voxel_grid_subsample_3d(
     const uint64_t nz = std::ceil((z_max - z_min) / voxel_size);
 
     /* Compute voxel index for each point */
-    const auto nthreads = std::thread::hardware_concurrency();
+    auto nthreads = std::thread::hardware_concurrency();
     const uint32_t chunk_size = std::ceil((float32) nrows / nthreads);
+    nthreads = std::ceil((float32) nrows / chunk_size);
 
     std::vector<std::vector<uint64_t>> point_to_voxels(nthreads);
     std::vector<std::thread> threads;
