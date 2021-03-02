@@ -17,11 +17,12 @@
  * along with subsampl.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #include <cstdint>
 #include <algorithm>
 #include <functional>
 #include <vector>
-
 
 template <typename K, typename V>
 class grouping_hashmap {
@@ -57,7 +58,7 @@ class grouping_hashmap {
             auto &values_ref = *this->values;
 
             uint64_t index_unoccupied = 0;
-            uint64_t index_end = this->size;
+            uint64_t index_end = this->size - 1;
             while (true) {
                 auto &meta_unoccupied = metas_ref[index_unoccupied];
                 while (meta_unoccupied.occupied)
