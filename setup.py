@@ -7,7 +7,7 @@ from pybind11.setup_helpers import Pybind11Extension
 
 this_dir = Path(__file__).parent
 
-flags = ["-Os"]
+flags = ["-O3"]
 extension = Pybind11Extension(
     "pysubsampl",
     sorted(map(str,
