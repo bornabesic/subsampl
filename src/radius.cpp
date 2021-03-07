@@ -92,10 +92,13 @@ std::vector<uint32_t> *radius_select_3d(
         }
     );
 
-    std::vector<uint32_t> *indices_merged = new std::vector<uint32_t>();
+    std::vector<uint32_t> *indices_merged = new std::vector<uint32_t>(std::move(indices[0]));
     indices_merged->reserve(ntotal);
-    for (const auto &indices_chunk : indices)
+
+    for (unsigned int t = 1; t < nthreads; ++t) {
+        const auto &indices_chunk = indices[t];
         indices_merged->insert(indices_merged->end(), indices_chunk.begin(), indices_chunk.end());
+    }
 
     return indices_merged;
 }
