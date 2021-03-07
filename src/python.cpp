@@ -72,6 +72,6 @@ PYBIND11_MODULE(pysubsampl, m) {
 
             return vector_pointer_to_numpy_array<uint32_t>(indices);
         },
-        py::arg("points"), py::arg("origin"), py::arg("voxel_size")
+        py::arg("points"), py::arg("origin"), py::arg("radius")
     );
 }
