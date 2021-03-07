@@ -39,3 +39,23 @@ std::vector<uint32_t> *voxel_grid_subsample_3d(
     const uint32_t nrows,
     const float32 voxel_size
 );
+
+/**
+ * @brief Subsamples an array of 3D points by selecting points within
+ *        a radius with respect to an origin.
+ *
+ * @param data Pointer to a two-dimensional array containing 3D data points
+ *             in a row-major order
+ * @param nrows Number of data points in the array
+ * @param origin Pointer to a one-dimensional array containing a 3D data point
+ *               representing the origin
+ * @param radius Radius within the points are selected
+ * @return std::vector<uint32_t>* Pointer to a vector containing indices of
+ *         subsampled points
+ */
+std::vector<uint32_t> *radius_select_3d(
+    const float32 *data,
+    const uint32_t nrows,
+    const float32 *origin,
+    const float32 radius
+);

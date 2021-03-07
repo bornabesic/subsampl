@@ -1,5 +1,5 @@
 
-add_library(subsampl voxel.cpp)
+add_library(subsampl voxel.cpp radius.cpp)
 target_link_libraries(subsampl pthread)
 
 if (BUILD_PYTHON_BINDINGS)
