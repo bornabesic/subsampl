@@ -7,9 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+N/A
+
+## [0.1.0] - 2023-03-16
+
 ### Added
 
 - Multithreaded voxel-based and radius-based subsampling
 - Python bindings
 
-[Unreleased]: https://github.com/bornabesic/subsampl/compare/c48c19ac5d296a0ac3ad55e953f5c126cda248cd...HEAD
+[Unreleased]: https://github.com/bornabesic/subsampl/compare/v0.1.0...HEAD
+[0.1.0]:https://github.com/bornabesic/subsampl/releases/tag/v0.1.0

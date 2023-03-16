@@ -31,7 +31,7 @@ constexpr float32 voxel_size = 0.025;
 
 int main(int argc, char *argv[]) {
     if (argc < 2) {
-        std::cout << "Usage: ./test <n>" << '\n';
+        std::cout << "Usage: ./example <n>" << '\n';
         return 1;
     }
 
@@ -45,6 +45,7 @@ int main(int argc, char *argv[]) {
         }
     }
 
+    // Generate a random point cloud
     std::vector<float32> data(n * 3);
     for (uint32_t i = 0; i < n; ++i) {
         const auto offset = i * 3;
@@ -56,10 +57,22 @@ int main(int argc, char *argv[]) {
     }
     std::cout << "Points: " << n << '\n';
 
-    auto *indices = voxel_grid_subsample_3d(&data[0], n, voxel_size);
-    std::cout << "Points (subsampled): " << indices->size() << '\n';
+    // Get indices of subsampled points
+    auto *indices_ptr = voxel_grid_subsample_3d(&data[0], n, voxel_size);
+    const auto &indices = *indices_ptr;
+    std::cout << "Points (subsampled): " << indices.size() << '\n';
 
-    delete indices;
+    // Subsample the point cloud using the indices
+    for (const auto index : indices) {
+        const auto offset = index * 3;
+        const auto x = data[offset];
+        const auto y = data[offset + 1];
+        const auto z = data[offset + 2];
+        // Do something with (x, y, z)
+        // ...
+    }
+
+    delete indices_ptr;
 
     return 0;
 }
