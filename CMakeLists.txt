@@ -13,7 +13,7 @@ if (NOT CMAKE_BUILD_TYPE)
 endif ()
 
 option(BUILD_PYTHON_BINDINGS OFF)
-option(BUILD_TESTS OFF)
+option(BUILD_EXAMPLES OFF)
 
 message("Build type: ${CMAKE_BUILD_TYPE}")
 message("Python bindings: ${BUILD_PYTHON_BINDINGS}")
@@ -24,6 +24,6 @@ add_subdirectory(external/)
 include_directories(include/)
 add_subdirectory(src/)
 
-if (BUILD_TESTS)
-    add_subdirectory(tests/)
+if (BUILD_EXAMPLES)
+    add_subdirectory(examples/)
 endif ()
