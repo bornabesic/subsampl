@@ -17,16 +17,15 @@
  * along with subsampl.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <pybind11/pybind11.h>
 #include <pybind11/numpy.h>
+#include <pybind11/pybind11.h>
 
-#include "types.hpp"
 #include "subsampl.hpp"
+#include "types.hpp"
 
 namespace py = pybind11;
 
-
-template<typename T>
+template <typename T>
 py::array_t<T> vector_pointer_to_numpy_array(std::vector<T> *vector) {
     py::capsule free_when_done(vector, [](void *ptr) {
         std::vector<T> *vector = static_cast<std::vector<T> *>(ptr);
@@ -35,9 +34,9 @@ py::array_t<T> vector_pointer_to_numpy_array(std::vector<T> *vector) {
 
     return {
         {vector->size()}, // Shape
-        {sizeof(T)}, // Strides
-        &(*vector)[0], // Data pointer
-        free_when_done // Base object (to avoid copying and to call delete)
+        {sizeof(T)},      // Strides
+        &(*vector)[0],    // Data pointer
+        free_when_done    // Base object (to avoid copying and to call delete)
     };
 }
 
@@ -46,7 +45,8 @@ PYBIND11_MODULE(pysubsampl, m) {
 
     m.def(
         "voxel_grid_subsample_3d",
-        [](const py::array_t<float32, py::array::c_style> &array, float32 voxel_size) {
+        [](const py::array_t<float32, py::array::c_style> &array,
+           float32 voxel_size) {
             auto a = array.unchecked<2>();
             uint32_t nrows = a.shape(0);
             float32 *data = static_cast<float32 *>(array.request().ptr);
@@ -55,12 +55,13 @@ PYBIND11_MODULE(pysubsampl, m) {
 
             return vector_pointer_to_numpy_array<uint32_t>(indices);
         },
-        py::arg("array"), py::arg("voxel_size")
-    );
+        py::arg("array"), py::arg("voxel_size"));
 
     m.def(
         "radius_select_3d",
-        [](const py::array_t<float32, py::array::c_style> &points, const py::array_t<float32, py::array::c_style> &origin, float32 radius) {
+        [](const py::array_t<float32, py::array::c_style> &points,
+           const py::array_t<float32, py::array::c_style> &origin,
+           float32 radius) {
             auto p = points.unchecked<2>();
             origin.unchecked<1>();
 
@@ -68,10 +69,10 @@ PYBIND11_MODULE(pysubsampl, m) {
             float32 *data_points = static_cast<float32 *>(points.request().ptr);
             float32 *data_origin = static_cast<float32 *>(origin.request().ptr);
 
-            auto *indices = radius_select_3d(data_points, nrows, data_origin, radius);
+            auto *indices =
+                radius_select_3d(data_points, nrows, data_origin, radius);
 
             return vector_pointer_to_numpy_array<uint32_t>(indices);
         },
-        py::arg("points"), py::arg("origin"), py::arg("radius")
-    );
+        py::arg("points"), py::arg("origin"), py::arg("radius"));
 }
