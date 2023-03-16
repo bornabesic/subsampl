@@ -28,7 +28,7 @@ namespace py = pybind11;
 template <typename T>
 py::array_t<T> vector_pointer_to_numpy_array(std::vector<T> *vector) {
     py::capsule free_when_done(vector, [](void *ptr) {
-        std::vector<T> *vector = static_cast<std::vector<T> *>(ptr);
+        auto *vector = static_cast<std::vector<T> *>(ptr);
         delete vector;
     });
 

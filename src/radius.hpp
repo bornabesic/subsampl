@@ -17,23 +17,12 @@
  * along with subsampl.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <iostream>
+#pragma once
 
-#include "hashmap.hpp"
+#include <subsampl/types.hpp>
 
-int main() {
-    grouping_hashmap<int, int> map(10);
-
-    map.insert(0, 1337);
-    map.insert(1, 1332);
-    map.insert(9, 5);
-
-    map.squeeze();
-    auto *values = map.move_values();
-
-    for (const auto &value : *values) {
-        std::cout << value << '\n';
-    }
-
-    return 0;
-}
+static void chunk_compute_inside_radius_3d(const float32 *data,
+                                           const float32 *origin,
+                                           std::vector<uint32_t> &indices,
+                                           uint32_t start, uint32_t end,
+                                           float32 radius);

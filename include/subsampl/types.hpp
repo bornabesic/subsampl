@@ -19,8 +19,8 @@
 
 #pragma once
 
-static_assert(sizeof(float) == 4);
-static_assert(sizeof(double) == 8);
+static_assert(sizeof(float) == 4, "The size of float should be 4 bytes");
+static_assert(sizeof(double) == 8, "The size of double should be 4 bytes");
 
 using float32 = float;
 using float64 = double;

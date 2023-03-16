@@ -42,8 +42,7 @@ template <typename K, typename V> class grouping_hashmap {
   public:
     grouping_hashmap() = delete;
 
-    grouping_hashmap(const uint64_t size) {
-        this->size = size;
+    explicit grouping_hashmap(const uint64_t size) : size(size) {
         this->metas = new std::vector<key_meta>(size);
         this->values = new std::vector<V>(size);
     }
@@ -97,8 +96,8 @@ template <typename K, typename V> class grouping_hashmap {
     }
 
     inline void insert(const K &key, const V &value) {
-        const auto hash = this->hash(key);
-        auto index = hash % this->size;
+        const auto hash_value = this->hash(key);
+        auto index = hash_value % this->size;
 
         auto &metas_ref = *this->metas;
         auto &values_ref = *this->values;
