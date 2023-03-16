@@ -20,8 +20,8 @@
 #include <pybind11/numpy.h>
 #include <pybind11/pybind11.h>
 
-#include "subsampl.hpp"
-#include "types.hpp"
+#include <subsampl/subsampl.hpp>
+#include <subsampl/types.hpp>
 
 namespace py = pybind11;
 

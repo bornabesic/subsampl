@@ -23,8 +23,8 @@
 #include <thread>
 #include <vector>
 
-#include "subsampl.hpp"
-#include "types.hpp"
+#include <subsampl/subsampl.hpp>
+#include <subsampl/types.hpp>
 
 static void _chunk_compute_inside_radius_3d(
     const float32 *data, const float32 *origin, std::vector<uint32_t> &indices,

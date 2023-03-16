@@ -23,8 +23,8 @@
 #include <vector>
 
 #include "hashmap.hpp"
-#include "subsampl.hpp"
-#include "types.hpp"
+#include <subsampl/subsampl.hpp>
+#include <subsampl/types.hpp>
 
 static void _chunk_compute_voxel_index_3d(
     const float32 *data, std::vector<uint64_t> &point_to_voxel,

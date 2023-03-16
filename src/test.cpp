@@ -21,8 +21,8 @@
 #include <random>
 #include <vector>
 
-#include "subsampl.hpp"
-#include "types.hpp"
+#include <subsampl/subsampl.hpp>
+#include <subsampl/types.hpp>
 
 constexpr float32 x_range = 1000;
 constexpr float32 y_range = 1000;
