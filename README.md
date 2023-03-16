@@ -41,7 +41,7 @@ pip install git+https://github.com/bornabesic/subsampl.git
 Please note that this still requires a C++ compiler to be present on the host system.
 
 ## Usage
-The API is currently documented in [subsampl.hpp](include/subsampl/subsampl.hpp).
+The API is currently documented in [subsampl.hpp](include/subsampl/subsampl.hpp). Usage examples can be found in [examples](examples/) directory.
 
 ## Contributing
 
