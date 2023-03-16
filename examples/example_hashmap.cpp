@@ -19,9 +19,9 @@
 
 #include <iostream>
 
-#include "hashmap.hpp"
+#include "../src/subsampl/hashmap.hpp"
 
-int main(void) {
+int main() {
     grouping_hashmap<int, int> map(10);
 
     map.insert(0, 1337);

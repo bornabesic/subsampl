@@ -19,8 +19,11 @@
 
 #pragma once
 
-static_assert(sizeof(float) == 4);
-static_assert(sizeof(double) == 8);
+#include <subsampl/types.hpp>
 
-using float32 = float;
-using float64 = double;
+static void chunk_compute_voxel_index_3d(const float32 *data,
+                                         std::vector<uint64_t> &point_to_voxel,
+                                         uint32_t start, uint32_t end,
+                                         float32 voxel_size, float32 x_min,
+                                         float32 y_min, float32 z_min,
+                                         uint64_t ny, uint64_t nz);

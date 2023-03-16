@@ -1,13 +1,11 @@
 
-add_library(subsampl voxel.cpp radius.cpp)
+add_library(subsampl STATIC subsampl/voxel.cpp subsampl/radius.cpp)
+set_target_properties(subsampl PROPERTIES PUBLIC_HEADER "../include/subsampl/subsampl.hpp;../include/subsampl/types.hpp")
 target_link_libraries(subsampl pthread)
 
+install(TARGETS subsampl PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/subsampl)
+
 if (BUILD_PYTHON_BINDINGS)
-    pybind11_add_module(pysubsampl python.cpp)
+    pybind11_add_module(pysubsampl subsampl/python.cpp)
     target_link_libraries(pysubsampl PRIVATE subsampl)
-endif(BUILD_PYTHON_BINDINGS)
-
-add_executable(test test.cpp)
-target_link_libraries(test subsampl)
-
-add_executable(test_hashmap test_hashmap.cpp)
+endif ()
