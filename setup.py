@@ -11,9 +11,8 @@ flags = ["-O3"]
 extension = Pybind11Extension(
     "pysubsampl",
     sorted(map(str,
-        filter(lambda p: not p.name.startswith("test"),
-        this_dir.glob("src/*.cpp")
-    ))),
+        this_dir.glob("src/**/*.cpp")
+    )),
     include_dirs=[str(this_dir / "include")],
     extra_compile_args=flags
 )
