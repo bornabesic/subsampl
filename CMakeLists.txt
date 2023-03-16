@@ -17,7 +17,7 @@ option(BUILD_PYTHON_BINDINGS OFF)
 message("Build type: ${CMAKE_BUILD_TYPE}")
 message("Python bindings: ${BUILD_PYTHON_BINDINGS}")
 
-add_subdirectory(lib/)
+add_subdirectory(external/)
 
 include_directories(include/)
 add_subdirectory(src/)
