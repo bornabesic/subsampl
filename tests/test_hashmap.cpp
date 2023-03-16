@@ -19,7 +19,7 @@
 
 #include <iostream>
 
-#include "subsampl/hashmap.hpp"
+#include "../src/subsampl/hashmap.hpp"
 
 int main() {
     grouping_hashmap<int, int> map(10);
