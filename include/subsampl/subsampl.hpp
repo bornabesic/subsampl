@@ -22,7 +22,7 @@
 #include <cstdint>
 #include <vector>
 
-#include "types.hpp"
+#include <subsampl/types.hpp>
 
 /**
  * @brief Subsamples an array of 3D points using a voxel grid.
