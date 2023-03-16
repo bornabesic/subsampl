@@ -5,7 +5,7 @@
 
 Library for fast subsampling of large 3D point clouds
 
-<!-- GETTING STARTED -->
+## [Changelog](CHANGELOG.md)
 
 ## Getting Started
 
