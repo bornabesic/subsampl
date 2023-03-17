@@ -1,7 +1,10 @@
 
 add_library(subsampl STATIC subsampl/voxel.cpp subsampl/radius.cpp)
 set_target_properties(subsampl PROPERTIES PUBLIC_HEADER "../include/subsampl/subsampl.hpp;../include/subsampl/types.hpp")
-target_link_libraries(subsampl pthread)
+
+if (NOT WIN32)
+    target_link_libraries(subsampl pthread)
+endif ()
 
 install(TARGETS subsampl PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/subsampl)
 
