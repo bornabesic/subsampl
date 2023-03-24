@@ -27,6 +27,8 @@
 #include <subsampl/subsampl.hpp>
 #include <subsampl/types.hpp>
 
+namespace subsampl {
+
 std::vector<uint32_t> *voxel_grid_subsample_3d(const float32 *data,
                                                const uint32_t nrows,
                                                const float32 voxel_size) {
@@ -102,6 +104,7 @@ std::vector<uint32_t> *voxel_grid_subsample_3d(const float32 *data,
 
     return map.move_values();
 }
+} // namespace subsampl
 
 static void chunk_compute_voxel_index_3d(
     const float32 *data, std::vector<uint64_t> &point_to_voxel,

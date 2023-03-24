@@ -21,6 +21,8 @@
 #include <catch2/catch_test_macros.hpp>
 #include <subsampl/subsampl.hpp>
 
+namespace ss = subsampl;
+
 TEST_CASE("Points are subsampled within voxels", "[voxel]") {
     const uint32_t nrows = 5;
     const float voxel_size = 0.3f;
@@ -35,7 +37,7 @@ TEST_CASE("Points are subsampled within voxels", "[voxel]") {
     };
     // clang-format on
 
-    auto *indices_ptr = voxel_grid_subsample_3d(data, nrows, voxel_size);
+    auto *indices_ptr = ss::voxel_grid_subsample_3d(data, nrows, voxel_size);
     auto &indices = *indices_ptr;
     std::sort(indices.begin(), indices.end());
 
@@ -62,7 +64,7 @@ TEST_CASE("Points with collapsed dimensions are subsampled within voxels",
     };
     // clang-format on
 
-    auto *indices_ptr = voxel_grid_subsample_3d(data, nrows, voxel_size);
+    auto *indices_ptr = ss::voxel_grid_subsample_3d(data, nrows, voxel_size);
     auto &indices = *indices_ptr;
     std::sort(indices.begin(), indices.end());
 
@@ -88,7 +90,7 @@ TEST_CASE("Points are subsampled within the specified radius", "[radius]") {
     };
     // clang-format on
 
-    auto *indices_ptr = radius_select_3d(data, nrows, origin, radius);
+    auto *indices_ptr = ss::radius_select_3d(data, nrows, origin, radius);
     auto &indices = *indices_ptr;
     std::sort(indices.begin(), indices.end());
 
@@ -116,7 +118,7 @@ TEST_CASE("Points with collapsed dimensions are subsampled within the "
     };
     // clang-format on
 
-    auto *indices_ptr = radius_select_3d(data, nrows, origin, radius);
+    auto *indices_ptr = ss::radius_select_3d(data, nrows, origin, radius);
     auto &indices = *indices_ptr;
     std::sort(indices.begin(), indices.end());
 

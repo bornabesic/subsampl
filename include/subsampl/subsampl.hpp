@@ -24,6 +24,8 @@
 
 #include <subsampl/types.hpp>
 
+namespace subsampl {
+
 /**
  * @brief Subsamples an array of 3D points using a voxel grid.
  *
@@ -53,3 +55,5 @@ std::vector<uint32_t> *voxel_grid_subsample_3d(const float32 *data,
  */
 std::vector<uint32_t> *radius_select_3d(const float32 *data, uint32_t nrows,
                                         const float32 *origin, float32 radius);
+
+} // namespace subsampl

@@ -27,6 +27,8 @@
 #include <subsampl/subsampl.hpp>
 #include <subsampl/types.hpp>
 
+namespace subsampl {
+
 std::vector<uint32_t> *radius_select_3d(const float32 *data,
                                         const uint32_t nrows,
                                         const float32 *origin,
@@ -73,6 +75,8 @@ std::vector<uint32_t> *radius_select_3d(const float32 *data,
 
     return indices_merged;
 }
+
+} // namespace subsampl
 
 static void chunk_compute_inside_radius_3d(
     const float32 *data, const float32 *origin, std::vector<uint32_t> &indices,
