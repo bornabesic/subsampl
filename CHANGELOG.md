@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Unit tests
 
+### Changed
+
+- Renamed the Python package from `pysubsampl` to `subsampl`
+
 ## [0.1.0] - 2023-03-16
 
 ### Added

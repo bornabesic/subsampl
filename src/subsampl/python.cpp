@@ -40,7 +40,7 @@ py::array_t<T> vector_pointer_to_numpy_array(std::vector<T> *vector) {
     };
 }
 
-PYBIND11_MODULE(pysubsampl, m) {
+PYBIND11_MODULE(subsampl, m) {
     m.doc() = "Python bindings for subsampl";
 
     m.def(
