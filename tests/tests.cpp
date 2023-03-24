@@ -75,6 +75,7 @@ TEST_CASE("Points with collapsed dimensions are subsampled within voxels",
 
 TEST_CASE("Points are subsampled within the specified radius", "[radius]") {
     const uint32_t nrows = 5;
+    const float32 origin[] = {-1.f, 0.5f, 0.25f};
     const float radius = 2.f;
 
     // clang-format off
@@ -85,8 +86,6 @@ TEST_CASE("Points are subsampled within the specified radius", "[radius]") {
         2.f, -2.f, 5.f,
         -0.1f, 0.1f, 0.2f,
     };
-
-    const float32 origin[] = {-1.f, 0.5f, 0.25f};
     // clang-format on
 
     auto *indices_ptr = radius_select_3d(data, nrows, origin, radius);
@@ -103,6 +102,7 @@ TEST_CASE("Points with collapsed dimensions are subsampled within the "
           "specified radius",
           "[radius]") {
     const uint32_t nrows = 5;
+    const float32 origin[] = {0.f, 0.f, 0.f};
     const float radius = 2.f;
 
     // NOTE y and z are always 0
@@ -114,8 +114,6 @@ TEST_CASE("Points with collapsed dimensions are subsampled within the "
         -1.f, 0.f, 0.f,
         -10.f, 0.f, 0.f,
     };
-
-    const float32 origin[] = {0.f, 0.f, 0.f};
     // clang-format on
 
     auto *indices_ptr = radius_select_3d(data, nrows, origin, radius);
