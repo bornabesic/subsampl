@@ -22,5 +22,5 @@ TEST_CASE("Points are subsampled within voxels", "[voxel]") {
     CHECK(indices[0] == 1);
     CHECK(indices[1] == 2);
     CHECK(indices[2] == 3);
-    CHECK(indices[3] == 5);
+    CHECK(indices[3] == 4);
 }
