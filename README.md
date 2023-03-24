@@ -2,6 +2,7 @@
 
 ![OSS Lifecycle](https://img.shields.io/osslifecycle/bornabesic/subsampl?label=oss%20lifecycle%20%282023-03%29&style=flat-square)
 ![GitHub](https://img.shields.io/github/license/bornabesic/subsampl?style=flat-square)
+![AppVeyor tests](https://img.shields.io/appveyor/ci/bornabesic/subsampl?style=flat-square)
 
 Library for fast subsampling of large 3D point clouds
 

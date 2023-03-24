@@ -1,0 +1,16 @@
+image: Ubuntu
+
+skip_branch_with_pr: true
+
+install:
+  - git submodule update --init --recursive
+
+build_script:
+  - mkdir build/
+  - cd build/
+  - cmake .. -D BUILD_TESTS=ON
+  - make
+
+test_script:
+  - cd tests/
+  - ctest
