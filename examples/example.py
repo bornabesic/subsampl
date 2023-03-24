@@ -2,7 +2,7 @@
 import time
 
 import numpy as np
-import pysubsampl
+import subsampl
 
 
 n = 100_000_000
@@ -17,7 +17,7 @@ print("Points:", data.shape[0])
 
 # Get indices of subsampled points
 t_start = time.time()
-indices = pysubsampl.voxel_grid_subsample_3d(data, voxel_size)
+indices = subsampl.voxel_grid_subsample_3d(data, voxel_size)
 print("Subsampling took", f"{time.time() - t_start:.2f}", "s")
 
 # Subsample the point cloud using the indices
