@@ -27,3 +27,8 @@ add_subdirectory(src/)
 if (BUILD_EXAMPLES)
     add_subdirectory(examples/)
 endif ()
+
+if (BUILD_TESTS)
+    include_directories(external/Catch2/src)
+    add_subdirectory(tests/)
+endif ()

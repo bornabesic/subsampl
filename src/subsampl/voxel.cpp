@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2021 Borna Bešić
+ * Copyright (C) 2023 Borna Bešić
  *
  * This file is part of subsampl.
  *
@@ -60,8 +60,10 @@ std::vector<uint32_t> *voxel_grid_subsample_3d(const float32 *data,
     }
 
     /* Number of cells for each dimension */
-    const uint64_t ny = std::ceil((y_max - y_min) / voxel_size);
-    const uint64_t nz = std::ceil((z_max - z_min) / voxel_size);
+    const uint64_t ny = std::max(
+        static_cast<uint64_t>(std::ceil((y_max - y_min) / voxel_size)), 1UL);
+    const uint64_t nz = std::max(
+        static_cast<uint64_t>(std::ceil((z_max - z_min) / voxel_size)), 1UL);
 
     /* Compute voxel index for each point */
     auto nthreads = std::thread::hardware_concurrency();
