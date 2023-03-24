@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2021 Borna Bešić
+ * Copyright (C) 2023 Borna Bešić
  *
  * This file is part of subsampl.
  *
