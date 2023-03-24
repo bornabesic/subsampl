@@ -1,0 +1,10 @@
+image: Ubuntu
+
+build_script:
+  - mkdir build/
+  - cd build/
+  - cmake .. -D BUILD_TESTS=ON
+  - make
+
+test_script:
+  - ctest
