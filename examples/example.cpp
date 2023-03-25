@@ -29,6 +29,8 @@ constexpr float32 y_range = 1000;
 constexpr float32 z_range = 30;
 constexpr float32 voxel_size = 0.025;
 
+namespace ss = subsampl;
+
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         std::cout << "Usage: ./example <n>" << '\n';
@@ -58,7 +60,7 @@ int main(int argc, char *argv[]) {
     std::cout << "Points: " << n << '\n';
 
     // Get indices of subsampled points
-    auto *indices_ptr = voxel_grid_subsample_3d(&data[0], n, voxel_size);
+    auto *indices_ptr = ss::voxel_grid_subsample_3d(&data[0], n, voxel_size);
     const auto &indices = *indices_ptr;
     std::cout << "Points (subsampled): " << indices.size() << '\n';
 

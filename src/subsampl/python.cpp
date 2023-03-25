@@ -24,6 +24,7 @@
 #include <subsampl/types.hpp>
 
 namespace py = pybind11;
+namespace ss = subsampl;
 
 template <typename T>
 py::array_t<T> vector_pointer_to_numpy_array(std::vector<T> *vector) {
@@ -51,7 +52,8 @@ PYBIND11_MODULE(subsampl, m) {
             uint32_t nrows = a.shape(0);
             float32 *data = static_cast<float32 *>(array.request().ptr);
 
-            auto *indices = voxel_grid_subsample_3d(data, nrows, voxel_size);
+            auto *indices =
+                ss::voxel_grid_subsample_3d(data, nrows, voxel_size);
 
             return vector_pointer_to_numpy_array<uint32_t>(indices);
         },
@@ -70,7 +72,7 @@ PYBIND11_MODULE(subsampl, m) {
             float32 *data_origin = static_cast<float32 *>(origin.request().ptr);
 
             auto *indices =
-                radius_select_3d(data_points, nrows, data_origin, radius);
+                ss::radius_select_3d(data_points, nrows, data_origin, radius);
 
             return vector_pointer_to_numpy_array<uint32_t>(indices);
         },
